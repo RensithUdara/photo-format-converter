@@ -370,8 +370,13 @@ body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Responsive Design */
@@ -379,35 +384,35 @@ body {
     .container {
         padding: 10px;
     }
-    
+
     .main-content {
         padding: 20px;
     }
-    
+
     .header-content {
         padding: 30px 20px;
     }
-    
+
     .header h1 {
         font-size: 2rem;
     }
-    
+
     .files-header {
         flex-direction: column;
         gap: 15px;
         align-items: stretch;
     }
-    
+
     .action-buttons {
         justify-content: center;
     }
-    
+
     .file-item {
         flex-direction: column;
         gap: 15px;
         text-align: center;
     }
-    
+
     .stats-section {
         flex-direction: column;
         gap: 15px;

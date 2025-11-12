@@ -4,7 +4,7 @@ class HEICConverter {
         this.uploadedCount = 0;
         this.convertedCount = 0;
         this.readyCount = 0;
-        
+
         this.initializeElements();
         this.attachEventListeners();
         this.loadExistingFiles();
@@ -34,10 +34,10 @@ class HEICConverter {
         this.uploadArea.addEventListener('dragover', this.handleDragOver.bind(this));
         this.uploadArea.addEventListener('dragleave', this.handleDragLeave.bind(this));
         this.uploadArea.addEventListener('drop', this.handleDrop.bind(this));
-        
+
         // File input change
         this.fileInput.addEventListener('change', this.handleFileSelect.bind(this));
-        
+
         // Action buttons
         this.convertAllBtn.addEventListener('click', this.convertAllFiles.bind(this));
         this.downloadAllBtn.addEventListener('click', this.downloadAllFiles.bind(this));
@@ -67,7 +67,7 @@ class HEICConverter {
     }
 
     processFiles(files) {
-        const heicFiles = files.filter(file => 
+        const heicFiles = files.filter(file =>
             file.name.toLowerCase().endsWith('.heic')
         );
 
@@ -251,7 +251,7 @@ class HEICConverter {
             fileData.status = 'uploading';
             delete fileData.error;
             this.renderFileItem(fileData);
-            
+
             // You would need to re-upload the file here
             // For now, just show a message
             this.showNotification('Retry functionality would re-upload the file', 'info');
@@ -262,7 +262,7 @@ class HEICConverter {
         try {
             const response = await fetch(`/convert-all?format=${this.formatSelect.value}`);
             const result = await response.json();
-            
+
             if (result.status === 'success') {
                 this.showNotification('All files converted successfully!', 'success');
                 this.loadExistingFiles();
@@ -278,7 +278,7 @@ class HEICConverter {
         try {
             const response = await fetch('/converted-files');
             const result = await response.json();
-            
+
             if (result.files && result.files.length > 0) {
                 result.files.forEach(file => {
                     const link = document.createElement('a');
@@ -300,7 +300,7 @@ class HEICConverter {
             try {
                 const response = await fetch('/clear', { method: 'DELETE' });
                 const result = await response.json();
-                
+
                 if (result.status === 'success') {
                     this.files.clear();
                     this.filesList.innerHTML = '';
@@ -321,7 +321,7 @@ class HEICConverter {
         try {
             const response = await fetch('/converted-files');
             const result = await response.json();
-            
+
             if (result.files && result.files.length > 0) {
                 result.files.forEach(file => {
                     const fileId = `existing-${file.name}-${Date.now()}`;
@@ -336,7 +336,7 @@ class HEICConverter {
                     this.files.set(fileId, fileData);
                     this.renderFileItem(fileData);
                 });
-                
+
                 this.readyCount = result.files.length;
                 this.convertedCount = result.files.length;
                 this.updateStats();
@@ -351,7 +351,7 @@ class HEICConverter {
         this.uploadedCountEl.textContent = this.files.size;
         this.convertedCountEl.textContent = this.convertedCount;
         this.readyCountEl.textContent = this.readyCount;
-        
+
         if (this.files.size > 0) {
             this.statsSection.style.display = 'flex';
         } else {
@@ -362,7 +362,7 @@ class HEICConverter {
     updateActionButtons() {
         const hasFiles = this.files.size > 0;
         const hasConvertedFiles = this.readyCount > 0;
-        
+
         this.convertAllBtn.style.display = hasFiles ? 'inline-flex' : 'none';
         this.downloadAllBtn.style.display = hasConvertedFiles ? 'inline-flex' : 'none';
         this.clearAllBtn.style.display = hasFiles ? 'inline-flex' : 'none';
@@ -380,7 +380,7 @@ class HEICConverter {
         this.notification.textContent = message;
         this.notification.className = `notification ${type}`;
         this.notification.classList.add('show');
-        
+
         setTimeout(() => {
             this.notification.classList.remove('show');
         }, 4000);

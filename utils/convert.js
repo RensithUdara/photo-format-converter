@@ -43,7 +43,7 @@ export async function convertAllHEIC(toFormat = "jpeg") {
 
       const outputBuffer = await heicConvert({
         buffer: inputBuffer,
-        format: finalFormat, 
+        format: finalFormat,
         quality: 1.0,
       });
 
@@ -88,12 +88,12 @@ export async function convertSingleHEIC(filename, toFormat = "jpeg") {
 
     fs.writeFileSync(outputPath, outputBuffer);
     console.log(`✅ Converted: ${outputFileName}`);
-    
-    return { 
-      status: "converted", 
-      outputFileName, 
+
+    return {
+      status: "converted",
+      outputFileName,
       inputFile: filename,
-      format: finalFormat 
+      format: finalFormat
     };
   } catch (err) {
     console.error(`❌ Failed to convert ${filename}: ${err.message}`);

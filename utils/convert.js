@@ -61,3 +61,42 @@ export async function convertAllHEIC(toFormat = "jpeg") {
 
   return results;
 }
+
+export async function convertSingleHEIC(filename, toFormat = "jpeg") {
+  if (!fs.existsSync(CONVERTED_DIR)) {
+    fs.mkdirSync(CONVERTED_DIR);
+  }
+
+  const validFormats = ["JPEG", "PNG"];
+  const formatUpper = toFormat.toUpperCase();
+  const finalFormat = validFormats.includes(formatUpper) ? formatUpper : "JPEG";
+
+  const inputPath = path.join(UPLOADS_DIR, filename);
+  const outputFileName = filename.replace(/\.heic$/i, `.${finalFormat.toLowerCase()}`);
+  const outputPath = path.join(CONVERTED_DIR, outputFileName);
+
+  console.log(`🔄 Converting: ${filename} → ${finalFormat}`);
+
+  try {
+    const inputBuffer = fs.readFileSync(inputPath);
+
+    const outputBuffer = await heicConvert({
+      buffer: inputBuffer,
+      format: finalFormat,
+      quality: 1.0,
+    });
+
+    fs.writeFileSync(outputPath, outputBuffer);
+    console.log(`✅ Converted: ${outputFileName}`);
+    
+    return { 
+      status: "converted", 
+      outputFileName, 
+      inputFile: filename,
+      format: finalFormat 
+    };
+  } catch (err) {
+    console.error(`❌ Failed to convert ${filename}: ${err.message}`);
+    throw new Error(`Conversion failed: ${err.message}`);
+  }
+}

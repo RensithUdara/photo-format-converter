@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEIC Photo Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <i class="fas fa-images header-icon"></i>
+                <h1>HEIC Photo Converter</h1>
+                <p>Convert your HEIC photos to JPEG or PNG format instantly</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <h3>Drag & Drop HEIC Files Here</h3>
+                        <p>or click to browse and select files</p>
+                        <input type="file" id="fileInput" accept=".heic,.HEIC" multiple hidden>
+                    </div>
+                </div>
+
+                <div class="format-selection">
+                    <label for="formatSelect">Output Format:</label>
+                    <select id="formatSelect">
+                        <option value="jpeg">JPEG</option>
+                        <option value="png">PNG</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Processing...</div>
+            </div>
+
+            <!-- Files Section -->
+            <div class="files-section">
+                <div class="files-header">
+                    <h3>Files</h3>
+                    <div class="action-buttons">
+                        <button id="convertAllBtn" class="btn btn-primary" style="display: none;">
+                            <i class="fas fa-sync-alt"></i> Convert All
+                        </button>
+                        <button id="downloadAllBtn" class="btn btn-success" style="display: none;">
+                            <i class="fas fa-download"></i> Download All
+                        </button>
+                        <button id="clearAllBtn" class="btn btn-danger" style="display: none;">
+                            <i class="fas fa-trash"></i> Clear All
+                        </button>
+                    </div>
+                </div>
+
+                <div class="files-list" id="filesList">
+                    <!-- Files will be displayed here -->
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-section" id="statsSection" style="display: none;">
+                <div class="stat-item">
+                    <i class="fas fa-file-upload"></i>
+                    <span>Uploaded: <strong id="uploadedCount">0</strong></span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Converted: <strong id="convertedCount">0</strong></span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-download"></i>
+                    <span>Ready: <strong id="readyCount">0</strong></span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Notification -->
+        <div class="notification" id="notification"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
     const isHEIC = file.originalname.toLowerCase().endsWith('.heic');
@@ -58,9 +58,9 @@ app.post('/upload', upload.single('heicFile'), async (req, res) => {
 
     const format = req.body.format || 'jpeg';
     const result = await convertSingleHEIC(req.file.filename, format);
-    
-    res.json({ 
-      status: 'success', 
+
+    res.json({
+      status: 'success',
       message: 'File converted successfully',
       originalFile: req.file.filename,
       convertedFile: result.outputFileName,
@@ -90,12 +90,12 @@ app.get('/converted-files', (req, res) => {
     if (!fs.existsSync(CONVERTED_DIR)) {
       return res.json({ files: [] });
     }
-    
+
     const files = fs.readdirSync(CONVERTED_DIR).map(file => ({
       name: file,
       downloadUrl: `/converted/${file}`
     }));
-    
+
     res.json({ files });
   } catch (error) {
     res.status(500).json({ status: 'error', message: error.message });
@@ -112,7 +112,7 @@ app.delete('/clear', (req, res) => {
         fs.unlinkSync(path.join(UPLOADS_DIR, file));
       });
     }
-    
+
     // Clear converted folder
     if (fs.existsSync(CONVERTED_DIR)) {
       const convertedFiles = fs.readdirSync(CONVERTED_DIR);
@@ -120,7 +120,7 @@ app.delete('/clear', (req, res) => {
         fs.unlinkSync(path.join(CONVERTED_DIR, file));
       });
     }
-    
+
     res.json({ status: 'success', message: 'All files cleared' });
   } catch (error) {
     res.status(500).json({ status: 'error', message: error.message });
